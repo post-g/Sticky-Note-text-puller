@@ -9,3 +9,5 @@ Since all of the lines of text come with an attached ID number the 're' module i
 
 ### Future Plans: 
 Using Google API, take the text that include dates and input the given note into personal Google Calednar. 
+
+Would like to possibly try to import the text from the sticky note to Apple notes on iPhone, but have not found any good documentation on interfacing from Windows to Apple notes via Python. 
