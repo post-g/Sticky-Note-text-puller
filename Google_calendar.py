@@ -37,8 +37,8 @@ def main():
 
     service = build('calendar', 'v3', credentials=creds)
 
-    # Call the Calendar API
-    now = datetime.datetime.utcnow().isoformat() + 'Z' # 'Z' indicates UTC time
+    # using create event function, then looping through all events
+    # to create new events in Google Calendar 
     events = create_event()
     for event in events:
         event = service.events().insert(calendarId='primary', body=event).execute()
