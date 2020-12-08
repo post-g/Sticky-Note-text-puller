@@ -1,0 +1,65 @@
+import sqlite3
+import re
+from datetime import datetime, timedelta
+
+
+def get_events(text: list) -> dict:
+    """Take in the list of string objects from the sticky note database, and
+    return a dictionary with dates as keys, and events as associated values."""
+    # find which text entries contain dates
+    events = {}
+    for line in text:
+        # format of sticky note events are separated by ':'
+        line = line.split(':')
+        # check if numeric input to create date object
+        if line[0] != '' and line[0][0].isdigit():
+            # using datetime to convert dates to datetime objects
+            dt = datetime.strptime(line[0], "%m/%d/%Y %H%M")
+            end_time = dt + timedelta(hours=2)
+            events[dt.strftime('%Y-%m-%dT%H:%M:%S')] = line[1], end_time.strftime('%Y-%m-%dT%H:%M:%S')
+
+    return events
+
+
+class StickyNote:
+    def __init__(self, database):
+        self._database = database
+        self._conn = None
+
+    def get_database(self):
+        return self._database
+
+    def get_conn(self):
+        return self._conn
+
+    def create_connection(self, sticky_db):
+        try:
+            conn = sqlite3.connect(sticky_db)
+        except Error as erorr:
+            print(erorr)
+
+        self._conn = conn
+
+    def get_sticky_note_text(self):
+        cur = self._conn.cursor()
+        cur.execute("SELECT Text FROM Note")
+        rows = cur.fetchone()
+        return rows
+
+
+def create_sticky():
+    database = r"C:\Users\Gerald Post\AppData\Local\Packages\Microsoft.MicrosoftStickyNotes_8wekyb3d8bbwe\LocalState\plum.sqlite"
+
+    sticky_note = StickyNote(database)
+    # create a database connection
+    sticky_note.create_connection(database)
+    with sticky_note.get_conn():
+        data = sticky_note.get_sticky_note_text()
+        text = (re.sub('(\\n)?(\\\\id=)(\d|\w){8}-(\d|\w){4}-(\d|\w){4}-(\d|\w){4}-(\d|\w){12}\s', '~', data[0]).split(
+            '~'))
+        events = get_events(text)
+    return events
+
+
+if __name__ == "__main__":
+    print(create_sticky())
