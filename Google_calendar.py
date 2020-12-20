@@ -37,13 +37,43 @@ def main():
 
     service = build('calendar', 'v3', credentials=creds)
 
-    # using create event function, then looping through all events
-    # to create new events in Google Calendar 
-    events = create_event()
-    for event in events:
-        event = service.events().insert(calendarId='primary', body=event).execute()
-        print('Event created: %s' % (event.get('htmlLink')))
+    # get current events 
+    curr_events = get_current_events(service)
 
+    # using create event function, then looping through all events
+    # to create new events in Google Calendar
+    events = create_event()
+
+    for event in events:
+        # check if an event already exists
+        # if it does, do not create new event in calendar 
+        if not check_if_event_exists(curr_events, event):
+            event = service.events().insert(calendarId='primary', body=event).execute()
+            print(f"Event created: {event['summary']}\nFor Date: {event['start']['dateTime']}\nUse Link To Modify Event: {event.get('htmlLink')}\n")
+        else:
+            print(f'**{event["summary"]}** already exists in calendar on {event["start"]["dateTime"]}.\n')
+
+def get_current_events(service):
+    # get all events starting at first day of current month 
+    first_day_of_month = datetime.datetime.today().replace(day=1).isoformat() + 'Z'
+    events_result = service.events().list(calendarId='primary', timeMin=first_day_of_month,
+                                               maxResults=50, singleEvents=True,
+                                               orderBy='startTime').execute()
+
+    return events_result.get('items', [])
+
+
+def check_if_event_exists(curr_events, event_to_add):
+    # creating a list of event summary and using .split('T') to only get YYYY-MM-DD without start-end time
+    current_events = [(event['summary'], event['start']['dateTime'].split('T')[0]) for event in curr_events] 
+    
+    # loop thru events to see if our new event has already been created 
+    for summary, date in current_events:
+        if summary == event_to_add['summary'] and date == event_to_add['start']['dateTime'].split('T')[0]:
+            return True
+
+    return False
+   
 
 def create_event():
     """Takes a dictionary of events from the sticky note text puller,
