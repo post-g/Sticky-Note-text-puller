@@ -54,6 +54,7 @@ def main():
             print(f'**{event["summary"]}** already exists in calendar on {event["start"]["dateTime"]}.\n')
 
 def get_current_events(service):
+    '''Return 50 of the most current events starting at the beginning of the current month.'''
     # get all events starting at first day of current month 
     first_day_of_month = datetime.datetime.today().replace(day=1).isoformat() + 'Z'
     events_result = service.events().list(calendarId='primary', timeMin=first_day_of_month,
@@ -64,6 +65,8 @@ def get_current_events(service):
 
 
 def check_if_event_exists(curr_events, event_to_add):
+    '''Given an event, check if that event exists in the current Google Calendar.'''
+    
     # creating a list of event summary and using .split('T') to only get YYYY-MM-DD without start-end time
     current_events = [(event['summary'], event['start']['dateTime'].split('T')[0]) for event in curr_events] 
     
