@@ -3,6 +3,7 @@ Takes the text from the Windows Sticky Notes desktop app, and stores will take t
 
 ### How to use: 
 Follow the instruciton for the Google API Quickstart here: [Python Quickstart](https://developers.google.com/calendar/quickstart/python)
+<br></br>
 Run 'pip install -r requirements.txt' to install all required dependencies 
 
 ### Implementation:
