@@ -17,3 +17,4 @@ The Google API template provided in the Quickstart is used to check user credent
 Allow the application to take in any date-time formats for the new event. 
 
 Would like to try to import the text from the sticky note to Apple notes on iPhone, but have not found any good documentation on interfacing from Windows to Apple notes via Python. 
+
