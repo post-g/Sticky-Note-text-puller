@@ -2,7 +2,8 @@
 Takes the text from the Windows Sticky Notes desktop app, and stores will take text in a specifc date-time format to create a new Google Calendar event. 
 
 ### How to use: 
-Follow the instruciton for the Google API quickstart here: [a linkl](https://developers.google.com/calendar/quickstart/python)
+Follow the instruciton for the Google API Quickstart here: [Python Quickstart](https://developers.google.com/calendar/quickstart/python)
+Run 'pip install -r requirements.txt' to install all required dependencies 
 
 ### Implementation:
 The sqlite3 module is used to conect to the database that stores the sticky note data on the user's local Windows machine. When a connection is made, then the text from the sticky note is found by executing a SQL SELECT statement, this will return the appropriate rows from the table. 
