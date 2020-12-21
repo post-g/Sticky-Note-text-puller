@@ -58,7 +58,7 @@ def get_events(text: list) -> dict:
 # Main function that creates a StickyNote object and gets a list of the desired text 
 def create_sticky():
     # replace with own user name for the path to the sqllite database 
-    database = r"C:\Users\Gerald Post\AppData\Local\Packages\Microsoft.MicrosoftStickyNotes_8wekyb3d8bbwe\LocalState\plum.sqlite"
+    database = r"C:\Users\YOUR_USER_NAME_HERE\AppData\Local\Packages\Microsoft.MicrosoftStickyNotes_8wekyb3d8bbwe\LocalState\plum.sqlite"
 
     sticky_note = StickyNote(database)
 
