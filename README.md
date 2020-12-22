@@ -16,5 +16,7 @@ The Google API template provided in the Quickstart is used to check user credent
 ### Future Plans: 
 Allow the application to take in any date-time formats for the new event. 
 
+Modify the sqllite database to allow for a trigger to run the python script whenever a new insert is made (a new line of text in the Sticky Note). 
+
 Would like to try to import the text from the sticky note to Apple notes on iPhone, but have not found any good documentation on interfacing from Windows to Apple notes via Python. 
 
